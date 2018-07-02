@@ -328,6 +328,24 @@ class KcnnPredictor:
             np.negative(y_atomic),
             np.negative(y_kbody))
 
+  def predict_forces(self, atoms_or_trajectory):
+    """
+    Only make predictions of atomic forces. All input structures must have the
+    same kind of atomic species.
+
+    Args:
+      atoms_or_trajectory: an `ase.Atoms` or an `ase.io.TrajectoryReader` or a
+        list of `ase.Atoms` with the same stoichiometry.
+
+    Returns:
+      f_atomics: a `float32` array of shape `[num_examples, num_atoms * 3]`
+        as the predicted atomic forces.
+
+    """
+    _, feed_dict = self.get_feed_dict(atoms_or_trajectory)
+    f_atomics = self._sess.run(self._operator_f_nn, feed_dict=feed_dict)
+    return f_atomics
+
   def eval(self, name, feed_dict=None):
     """
     Evaluate a specific tensor from the graph given the feed dict.
