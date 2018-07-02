@@ -256,10 +256,20 @@ class KcnnPredictor:
     occurs = transformed.occurs.reshape((ntotal, 1, 1, -1))
     split_dims = transformed.split_dims
 
-    feed_dict = {self._placeholder_inputs: features,
-                 self._placeholder_occurs: occurs,
-                 self._placeholder_weights: weights,
-                 self._placeholder_split_dims: split_dims}
+    if self._transformer.atomic_forces_enabled:
+        coefficients = transformed.coefficients.reshape((ntotal, -1, ck2 * 6))
+        indexing = transformed.indexing.reshape((ntotal, 3*(len(self._transformer._species)-self._transformer._num_ghosts), -1))
+        feed_dict = {self._placeholder_inputs: features,
+                     self._placeholder_occurs: occurs,
+                     self._placeholder_weights: weights,
+                     self._placeholder_split_dims: split_dims,
+                     self._placeholder_coefficients: coefficients,
+                     self._placeholder_indexing: indexing}
+    else:
+        feed_dict = {self._placeholder_inputs: features,
+                     self._placeholder_occurs: occurs,
+                     self._placeholder_weights: weights,
+                     self._placeholder_split_dims: split_dims}
     return species, feed_dict
 
   def predict_total_energy(self, atoms_or_trajectory):
