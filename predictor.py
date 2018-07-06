@@ -342,6 +342,7 @@ class KcnnPredictor:
         as the predicted atomic forces.
 
     """
+    # predict forces for trajectory is broken now
     _, feed_dict = self.get_feed_dict(atoms_or_trajectory)
     f_atomics = self._sess.run(self._operator_f_nn, feed_dict=feed_dict)
     return f_atomics
