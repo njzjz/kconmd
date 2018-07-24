@@ -40,7 +40,7 @@ tf.app.flags.DEFINE_boolean('fixed_one_body', False,
                             """Make the one-body weights fixed.""")
 tf.app.flags.DEFINE_integer("trainable_k_max", 3,
                             """Set the trainable k_max.""")
-tf.app.flags.DEFINE_string('activation_fn', "lrelu",
+tf.app.flags.DEFINE_string('activation_fn', "tanh",
                            """Set the activation function for conv layers.""")
 tf.app.flags.DEFINE_float('alpha', 0.01,
                           """The alpha value of the leaky relu.""")
