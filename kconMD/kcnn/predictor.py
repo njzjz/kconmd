@@ -12,9 +12,9 @@ from ase import Atoms
 from ase.io.trajectory import Trajectory
 from tensorflow.core.framework import graph_pb2
 from tensorflow.python.framework import importer
-from constants import GHOST
-from save_model import get_tensors_to_restore
-from transformer import MultiTransformer, FixedLenMultiTransformer
+from kconMD.kcnn.constants import GHOST
+from kconMD.kcnn.save_model import get_tensors_to_restore
+from kconMD.kcnn.transformer import MultiTransformer, FixedLenMultiTransformer
 
 __author__ = 'Xin Chen'
 __email__ = 'Bismarrck@me.com'

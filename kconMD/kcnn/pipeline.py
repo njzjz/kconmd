@@ -11,7 +11,7 @@ from collections import namedtuple
 from functools import partial
 from os import makedirs
 from os.path import join, isdir
-from constants import SEED
+from kconMD.kcnn.constants import SEED
 
 __author__ = 'Xin Chen'
 __email__ = 'Bismarrck@me.com'

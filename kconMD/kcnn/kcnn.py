@@ -10,14 +10,14 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.contrib.opt import NadamOptimizer
 
-import pipeline
-from constants import SEED
-from constants import VARIABLE_MOVING_AVERAGE_DECAY, LOSS_MOVING_AVERAGE_DECAY
-from summary_utils import add_total_norm_summaries, add_variable_summaries
-from inference import inference_energy, inference_forces
-from utils import lrelu, selu, reduce_l2_norm
-from utils import selu_initializer, msra_initializer
-from amsgrad import AmsGrad
+from kconMD.kcnn import pipeline
+from kconMD.kcnn.constants import SEED
+from kconMD.kcnn.constants import VARIABLE_MOVING_AVERAGE_DECAY, LOSS_MOVING_AVERAGE_DECAY
+from kconMD.kcnn.summary_utils import add_total_norm_summaries, add_variable_summaries
+from kconMD.kcnn.inference import inference_energy, inference_forces
+from kconMD.kcnn.utils import lrelu, selu, reduce_l2_norm
+from kconMD.kcnn.utils import selu_initializer, msra_initializer
+from kconMD.kcnn.amsgrad import AmsGrad
 
 __author__ = 'Xin Chen'
 __email__ = 'Bismarrck@me.com'
