@@ -14,7 +14,7 @@ class kconMD(object):
         time1=time.time()
         cf=ComputeForces(self.pbfilename,cell=self.cell,pbc=self.pbc,cutoff=self.cutoff)
         forces=cf.predictforcesfromxyz(self.xyzfilename)
-        forces*=unit
+        forces*=self.unit
         with open(self.outputfilename,'w') as f:
             for force in forces:
                 print("".join("%16.9f"%x for x in force),file=f)
