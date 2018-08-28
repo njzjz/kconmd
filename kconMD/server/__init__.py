@@ -1,5 +1,4 @@
 import os,time
-from kconMD.force import ComputeForces
 
 class kconMD_CS(object):
     def __init__(self,server_path="/tmp/kconmd.server",client_path="/tmp/kconmd.client",sleeptime=1):
