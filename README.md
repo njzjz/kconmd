@@ -26,6 +26,9 @@ $ cd kconMD/
 $ python3 setup.py install
 ```
 
-# Example
+# Examples
+## Simple example
+See [examples/example.py](examples/example.py).
 
-See [example/example.py](example/example.py).
+## Client–server model
+See [examples/server.py](examples/server.py) and [examples/client.py](examples/client.py).
