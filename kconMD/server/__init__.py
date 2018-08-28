@@ -1,4 +1,5 @@
 import os,time
+from kconMD.force import ComputeForces
 
 class kconMD_CS(object):
     def __init__(self,server_path="/tmp/kconmd.server",client_path="/tmp/kconmd.client",sleeptime=1):
@@ -51,9 +52,10 @@ class kconMD_server(kconMD_CS):
         kconMD_CS.__init__(self,server_path=server_path,client_path=client_path,sleeptime=sleeptime)
         self.read_path=self.server_path
         self.write_path=self.client_path
-        self.kconMD=kconMD
-        self.printforce=self.kconMD.printforce
         self.mkfifos()
+        self.kconMD=kconMD
+        self.kconMD.initcf()
+        self.printforce=self.kconMD.printforce
 
     def handleMessage(self,message):
         if "Printforce" in message:
