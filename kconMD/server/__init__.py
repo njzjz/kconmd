@@ -36,7 +36,7 @@ class kconMD_CS(object):
             if len(s)==0:
                 time.sleep(self.sleeptime)
                 continue
-            print(self.logging_prefix+"Receive message:",s)
+            print(self.logging_prefix,"Receive message:",s)
             if "Exit" in s:
                 print(self.logging_prefix,"EXIT")
                 break
