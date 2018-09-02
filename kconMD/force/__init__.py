@@ -2,10 +2,10 @@
 # Jinzhe Zeng
 # 2018/08/21
 import numpy as np
-from ase import Atoms
 from ase.io import read
-from ase.geometry import wrap_positions
 from kconMD.kcnn.predictor import KcnnPredictor
+from kconMD.force.feed import Feed
+from multiprocessing import Pool
 
 class ComputeForces(object):
     def __init__(self,pbfilename,cell=[0,0,0],pbc=True,cutoff=6):
@@ -14,36 +14,27 @@ class ComputeForces(object):
         self.pbc=pbc
         self.cutoff=cutoff
         self.maxatoms=self.clf.transformer.max_occurs
-
-    def predictatomforce(self,i,atoms):
-        distances=atoms.get_distances(i,np.arange(self.N),mic=True)
-        distances_cutoff=[(distances[i],i) for i in np.arange(self.N) if distances[i]<self.cutoff] if self.cutoff>0 else distances
-        distances_cutoff.sort()
-        atom_num={}
-        indexs=[]
-        for distance in distances_cutoff:
-            symbol=atoms[distance[1]].symbol
-            if symbol in atom_num:
-                if atom_num[symbol]<self.maxatoms[symbol]:
-                    atom_num[symbol]+=1
-                    indexs.append(distance[1])
-            else:
-                if symbol in self.maxatoms:
-                    atom_num[symbol]=1
-                    indexs.append(distance[1])
-        traj=Atoms([atoms[j] for j in indexs],cell=atoms.get_cell())
-        traj.wrap(center=atoms[i].position/atoms.get_cell_lengths_and_angles()[0:3],pbc=atoms.get_pbc())
-        index=indexs.index(i)
-        force=np.array(self.clf.predict_forces(traj)[0][3*index:3*index+3])
-        return force
+        self.feedobject=Feed(self.clf.transformer,self.cutoff)
 
     def predictforces(self,atoms):
         self.N=len(atoms)
         forces=np.zeros((self.N,3))
-        for i in np.arange(self.N):
-            forces[i]=self.predictatomforce(i,atoms)
+        with Pool() as pool:
+            feeds=self.feedobject.runmp(atoms,pool)
+            for i,feed in enumerate(feeds):
+                forces[i]=np.array(self.computeforcefromfeed(feed)[0][3*feed['index']:3*feed['index']+3])
         forces-=np.abs(forces)/np.sum(np.abs(forces),0)*np.sum(forces,0)
         return forces
+
+    def computeforcefromfeed(self,feed):
+        feed_dict = {self.clf._placeholder_inputs: feed["inputs"],
+                     self.clf._placeholder_occurs: feed["occurs"],
+                     self.clf._placeholder_weights: feed["weights"],
+                     self.clf._placeholder_split_dims: feed["split_dims"],
+                     self.clf._placeholder_coefficients: feed["coefficients"],
+                     self.clf._placeholder_indexing: feed["indexing"]}
+        f_atomics = self.clf._sess.run(self.clf._operator_f_nn, feed_dict=feed_dict)
+        return f_atomics
 
     def predictforcesfromxyz(self,xyzfilename):
         atoms=read(xyzfilename)
