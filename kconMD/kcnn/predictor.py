@@ -71,7 +71,7 @@ class KcnnPredictor:
         importer.import_graph_def(output_graph_def, name="")
 
     self._graph = graph
-    self._sess = tf.Session(graph=graph)
+    self._sess = tf.Session(graph=graph,config=tf.ConfigProto(intra_op_parallelism_threads=2,inter_op_parallelism_threads=5))
     self._transformer = restore_transformer(self._graph, self._sess, fixed)
     assert isinstance(self._transformer, MultiTransformer)
 
