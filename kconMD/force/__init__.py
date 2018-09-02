@@ -42,6 +42,7 @@ class ComputeForces(object):
         forces=np.zeros((self.N,3))
         for i in np.arange(self.N):
             forces[i]=self.predictatomforce(i,atoms)
+        forces-=np.abs(forces)/np.sum(np.abs(forces),0)*np.sum(forces,0)
         return forces
 
     def predictforcesfromxyz(self,xyzfilename):
