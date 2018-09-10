@@ -12,6 +12,14 @@ Email: njzjz@qq.com  10154601140@stu.ecnu.edu.cn
 ## Acknowledgement
 Many thanks to [Xin Chen](https://github.com/Bismarrck) for his help and development of [kCON](https://github.com/Bismarrck/kcon).
 
+## Requirements
+* [numpy](https://github.com/numpy/numpy)
+* [scipy](https://github.com/scipy/scipy)
+* [matplotlib](https://github.com/matplotlib/matplotlib)
+* [scikit-learn](https://github.com/scikit-learn/scikit-learn)
+* [ASE](https://wiki.fysik.dtu.dk/ase/)
+* [TensorFlow](https://github.com/tensorflow/tensorflow)
+
 ## Installation
 
 ### With pip
