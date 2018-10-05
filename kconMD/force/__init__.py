@@ -15,15 +15,16 @@ class ComputeForces(object):
         self.cutoff=cutoff
         self.maxatoms=self.clf.transformer.max_occurs
         self.feedobject=Feed(self.clf.transformer,self.cutoff)
+        self._pool=Pool()
 
     def predictforces(self,atoms):
         self.N=len(atoms)
         forces=np.zeros((self.N,3))
-        with Pool() as pool:
-            feeds=self.feedobject.runmp(atoms,pool)
-            for i,feed in enumerate(feeds):
-                forces[i]=np.array(self.computeforcefromfeed(feed)[0][3*feed['index']:3*feed['index']+3])
-        forces-=np.abs(forces)/np.sum(np.abs(forces),0)*np.sum(forces,0)
+        feeds=self.feedobject.runmp(atoms,self._pool)
+        for i,feed in enumerate(feeds):
+            forces[i]=np.array(self.computeforcefromfeed(feed)[0][3*feed['index']:3*feed['index']+3])
+        if np.abs(np.sum(forces))>0:
+            forces-=np.abs(forces)/np.sum(np.abs(forces),0)*np.sum(forces,0)
         return forces
 
     def computeforcefromfeed(self,feed):
