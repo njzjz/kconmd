@@ -34,14 +34,14 @@ $ cd kconMD/
 $ python3 setup.py install
 ```
 
-# Examples
-## Simple example
+## Examples
+### Simple example
 See [examples/example.py](examples/example.py).
 
-## Client–server model
+### Client–server model
 See [examples/server.py](examples/server.py) and [examples/client.py](examples/client.py).
 
-## Run MD with LAMMPS
+### Run MD with LAMMPS
 See [njzjz/Pyforce](https://github.com/njzjz/Pyforce) repository and install Pyforce module. Then rename [examples/client.py](examples/client.py) as `force.py` and put it where you run LAMMPS. Add a line in the LAMMPS input file:
 ```
 fix 1 all pyforce C H O
