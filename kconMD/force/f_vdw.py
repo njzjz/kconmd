@@ -2,7 +2,7 @@ from ase.io import read
 import numpy as np
 from math import exp
 
-class vdw(object):
+class f_vdw(object):
     def __init__(self):
         swa=0.00
         swb=10.00

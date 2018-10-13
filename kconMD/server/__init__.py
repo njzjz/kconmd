@@ -58,6 +58,7 @@ class kconMD_server(kconMD_CS):
         self.mkfifos()
         self.kconMD=kconMD
         self.kconMD.initcf()
+        self.logging("Initialization is complete.")
 
     @property
     def printforce(self):

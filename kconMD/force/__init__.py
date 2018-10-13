@@ -6,6 +6,7 @@ from ase.io import read
 from kconMD.kcnn.predictor import KcnnPredictor
 from kconMD.force.feed import Feed
 from multiprocessing import Pool
+from kconMD.force.f_vdw import f_vdw
 
 class ComputeForces(object):
     def __init__(self,pbfilename,cell=[0,0,0],pbc=True,cutoff=6,vdw=False):
@@ -27,7 +28,7 @@ class ComputeForces(object):
             forces[i]=np.array(self.computeforcefromfeed(feed)[0][3*feed['index']:3*feed['index']+3])
         # vdw forces
         if self.vdw:
-            forces+=vdw().calculate_forces(atoms)
+            forces+=f_vdw().calculate_forces(atoms)
         # Make the resultant force equal to 0
         if np.abs(np.sum(forces))>0:
             forces-=np.abs(forces)/np.sum(np.abs(forces),0)*np.sum(forces,0)
