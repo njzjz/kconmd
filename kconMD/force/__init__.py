@@ -5,18 +5,19 @@ import numpy as np
 from ase.io import read
 from kconMD.kcnn.predictor import KcnnPredictor
 from kconMD.force.feed import Feed
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 from kconMD.force.f_vdw import f_vdw
 
 class ComputeForces(object):
-    def __init__(self,pbfilename,cell=[0,0,0],pbc=True,cutoff=6,vdw=False):
+    def __init__(self,pbfilename,cell=[0,0,0],pbc=True,cutoff=6,vdw=False,nproc=None):
         self.clf = KcnnPredictor(pbfilename,fixed=True)
         self.cell=cell
         self.pbc=pbc
         self.cutoff=cutoff
         self.maxatoms=self.clf.transformer.max_occurs
         self.feedobject=Feed(self.clf.transformer,self.cutoff)
-        self._pool=Pool()
+        self.nproc=nproc if nproc else cpu_count()
+        self._pool=Pool(self.nproc)
         self.vdw=vdw
 
     def predictforces(self,atoms):

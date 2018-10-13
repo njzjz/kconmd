@@ -1,4 +1,5 @@
 import os,time
+from kconMD import kconmd_logging
 
 class kconMD_CS(object):
     def __init__(self,server_path="/tmp/kconmd.server",client_path="/tmp/kconmd.client",sleeptime=1):
@@ -47,7 +48,7 @@ class kconMD_CS(object):
 
     def logging(self,*message):
         localtime = time.asctime( time.localtime(time.time()) )
-        print(localtime,self.logging_prefix,*message)
+        kconmd_logging(self.logging_prefix,*message)
 
     def handleMessage(self,message):
         pass
