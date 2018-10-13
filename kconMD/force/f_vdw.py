@@ -4,6 +4,8 @@ from math import exp
 
 class f_vdw(object):
     def __init__(self):
+        self.kcal_to_eV=1./23.06035
+
         swa=0.00
         swb=10.00
         d1 = swb - swa
@@ -35,10 +37,10 @@ class f_vdw(object):
         self.twbpname={"C":{"C":"C","H":"CH","O":"CO"},"H":{"C":"CH","H":"H","O":"HO"},"O":{"C":"CO","H":"HO","O":"O"}}
 
 
-    def calculate_forces(atoms):
+    def calculate_forces(self,atoms):
         Tap=self.Tap
         n=len(atoms)
-        distances=atoms.get_all_distances()
+        distances=atoms.get_all_distances(mic=True)
         forces=np.zeros((n,n))
         for i in range(n):
             for j in range(i+1,n):
@@ -74,7 +76,9 @@ class f_vdw(object):
         atomforce=np.zeros((n,3))
         for i in range(n):
             for j in range(i+1,n):
-                atomforce_ij = (atoms[j].position-atoms[i].position)/np.linalg.norm(distances[i][j])*forces[i][j]
+                atomforce_ij = atoms.get_distance(i,j,mic=True,vector=True)/np.linalg.norm(distances[i][j])*forces[i][j]
                 atomforce[i]+=-atomforce_ij
                 atomforce[j]+=atomforce_ij
+
+        atomforce*=self.kcal_to_eV
         return atomforce
