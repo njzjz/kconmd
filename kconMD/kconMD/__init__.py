@@ -1,7 +1,7 @@
 from kconMD.force import ComputeForces
 import time
 class kconMD(object):
-    def __init__(self,pbfilename,xyzfilename,outputfilename,cell=[0,0,0],pbc=True,cutoff=6,unit=1):
+    def __init__(self,pbfilename,xyzfilename,outputfilename,cell=[0,0,0],pbc=True,cutoff=6,unit=1,vdw=False):
         self.pbfilename=pbfilename
         self.xyzfilename=xyzfilename
         self.cell=cell
@@ -9,15 +9,16 @@ class kconMD(object):
         self.cutoff=cutoff
         self.outputfilename=outputfilename
         self.unit=unit
+        self.vdw=vdw
         self.cf=None
 
     def initcf(self):
-        self.cf=ComputeForces(self.pbfilename,cell=self.cell,pbc=self.pbc,cutoff=self.cutoff)
+        if self.cf==None:
+            self.cf=ComputeForces(self.pbfilename,cell=self.cell,pbc=self.pbc,cutoff=self.cutoff,vdw=self.vdw)
 
     def printforce(self):
         time1=time.time()
-        if self.cf==None:
-            self.initcf()
+        self.initcf()
         forces=self.cf.predictforcesfromxyz(self.xyzfilename)
         forces*=self.unit
         with open(self.outputfilename,'w') as f:

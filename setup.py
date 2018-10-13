@@ -1,6 +1,6 @@
 from setuptools import setup
 setup(name='kconMD',
-      version='1.0.10',
+      version='1.0.11',
       description='Molecular dynamics (MD) simulations supported by k-Bags Convolutional Neural Network (kcon).',
       keywords="molecular dynamics kcon",
       url='https://github.com/njzjz/kconMD',
