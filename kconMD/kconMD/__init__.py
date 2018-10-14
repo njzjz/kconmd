@@ -25,7 +25,7 @@ class kconMD(object):
         forces*=self.unit
         with open(self.outputfilename,'w') as f:
             for force in forces:
-                print("".join("%16.9f"%x for x in force),file=f)
+                print(*("%16.9f"%x for x in force),sep='',file=f)
         time2=time.time()
         kconmd_logging("Compute Forces: Time cosumed:",time2-time1,"s")
 
