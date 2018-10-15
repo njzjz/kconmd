@@ -3,7 +3,8 @@ import numpy as np
 from math import exp
 
 class f_vdw(object):
-    def __init__(self):
+    def __init__(self,cutoff=6):
+        self.cutoff=cutoff
         self.kcal_to_eV=1./23.06035
 
         swa=0.00
@@ -44,34 +45,35 @@ class f_vdw(object):
         forces=np.zeros((n,n))
         for i in range(n):
             for j in range(i+1,n):
-                r_vdW,D,alpha=self._twbps[self.twbpname[atoms[i].symbol][atoms[j].symbol]]
                 r_ij=distances[i][j]
+                if r_ij<=self.cutoff:
+                    r_vdW,D,alpha=self._twbps[self.twbpname[atoms[i].symbol][atoms[j].symbol]]
 
-                Tap1 = Tap[7] * r_ij + Tap[6];
-                Tap1 = Tap1 * r_ij + Tap[5];
-                Tap1 = Tap1 * r_ij + Tap[4];
-                Tap1 = Tap1 * r_ij + Tap[3];
-                Tap1 = Tap1 * r_ij + Tap[2];
-                Tap1 = Tap1 * r_ij + Tap[1];
-                Tap1 = Tap1 * r_ij + Tap[0];
+                    Tap1 = Tap[7] * r_ij + Tap[6];
+                    Tap1 = Tap1 * r_ij + Tap[5];
+                    Tap1 = Tap1 * r_ij + Tap[4];
+                    Tap1 = Tap1 * r_ij + Tap[3];
+                    Tap1 = Tap1 * r_ij + Tap[2];
+                    Tap1 = Tap1 * r_ij + Tap[1];
+                    Tap1 = Tap1 * r_ij + Tap[0];
 
-                dTap = 7*Tap[7] * r_ij + 6*Tap[6];
-                dTap = dTap * r_ij + 5*Tap[5];
-                dTap = dTap * r_ij + 4*Tap[4];
-                dTap = dTap * r_ij + 3*Tap[3];
-                dTap = dTap * r_ij + 2*Tap[2];
-                dTap += Tap[1]/r_ij;
+                    dTap = 7*Tap[7] * r_ij + 6*Tap[6];
+                    dTap = dTap * r_ij + 5*Tap[5];
+                    dTap = dTap * r_ij + 4*Tap[4];
+                    dTap = dTap * r_ij + 3*Tap[3];
+                    dTap = dTap * r_ij + 2*Tap[2];
+                    dTap += Tap[1]/r_ij;
 
 
-                exp1 = exp( alpha * (1.0 - r_ij / r_vdW) );
-                exp2 = exp( 0.5 * alpha * (1.0 - r_ij / r_vdW) );
+                    exp1 = exp( alpha * (1.0 - r_ij / r_vdW) );
+                    exp2 = exp( 0.5 * alpha * (1.0 - r_ij / r_vdW) );
 
-                e_vdW = D * (exp1 - 2.0 * exp2);
+                    e_vdW = D * (exp1 - 2.0 * exp2);
 
-                CEvd = dTap*e_vdW - Tap1* D * (alpha / r_vdW) * (exp1 - exp2) / r_ij;
+                    CEvd = dTap*e_vdW - Tap1* D * (alpha / r_vdW) * (exp1 - exp2) / r_ij;
 
-                forces[i][j]=-CEvd
-                forces[j][i]=-CEvd
+                    forces[i][j]=-CEvd
+                    forces[j][i]=-CEvd
 
         atomforce=np.zeros((n,3))
         for i in range(n):

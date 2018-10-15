@@ -29,7 +29,7 @@ class ComputeForces(object):
             forces[i]=np.array(self.computeforcefromfeed(feed)[0][3*feed['index']:3*feed['index']+3])
         # vdw forces
         if self.vdw:
-            forces+=f_vdw().calculate_forces(atoms)
+            forces+=f_vdw(cutoff=self.cutoff).calculate_forces(atoms)
         # Make the resultant force equal to 0
         if np.abs(np.sum(forces))>0:
             forces-=np.abs(forces)/np.sum(np.abs(forces),0)*np.sum(forces,0)
