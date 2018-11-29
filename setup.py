@@ -6,12 +6,12 @@ setup(name='kconMD',
       url='https://github.com/njzjz/kconMD',
       author='Jinzhe Zeng',
       author_email='jzzeng@stu.ecnu.edu.cn',
-      packages=['kconMD','kconMD/kconMD','kconMD/force','kconMD/kcnn','kconMD/server'],
-      install_requires=['numpy','scipy','matplotlib','scikit-learn','ase>=3.12'],
+      packages=['kconMD', 'kconMD/kconMD',
+                'kconMD/force', 'kconMD/kcnn', 'kconMD/server'],
+      install_requires=['numpy', 'scipy',
+                        'matplotlib', 'scikit-learn', 'ase>=3.12'],
       extras_require={
-        "tf": ["tensorflow>=1.3"],
-        "tf_gpu": ["tensorflow-gpu>=1.3"],
+          "tf": ["tensorflow>=1.3"],
+          "tf_gpu": ["tensorflow-gpu>=1.3"],
       }
-    )
-
-
+      )
