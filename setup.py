@@ -10,6 +10,7 @@ if __name__ == '__main__':
     with open(path.join(this_directory, 'docs', 'README.md'), encoding='utf-8') as f:
         long_description = f.read()
 
+    tests_require=['pytest-sugar', 'pytest-cov'],
     setup(name='kconmd',
           description='Molecular dynamics (MD) simulations supported by k-Bags Convolutional Neural Network (kcon).',
           keywords="molecular dynamics kcon",
@@ -25,9 +26,10 @@ if __name__ == '__main__':
           extras_require={
               "tf": ["tensorflow>=1.3"],
               "tf_gpu": ["tensorflow-gpu>=1.3"],
+              'test': tests_require,
           },
           test_suite='kconmd.test',
-          tests_require=['pytest-sugar'],
+          tests_require=tests_require,
           use_scm_version=True,
           setup_requires=['setuptools_scm', 'pytest-runner'],
           package_data={
