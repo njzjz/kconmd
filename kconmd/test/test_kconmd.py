@@ -10,17 +10,12 @@ from kconmd import kconMD
 from kconmd.server import kconMD_client, kconMD_server
 
 
-@pytest.fixture(scope="class")
-def cleandir():
-    folder = tempfile.mkdtemp(prefix='testfiles-', dir='.')
-    logging.info(f'Folder: {folder}:')
-    os.chdir(folder)
-
-
-@pytest.mark.usefixtures("cleandir")
 class Test_all:
     @pytest.fixture(scope="class")
     def kconmd(self):
+        folder = tempfile.mkdtemp(prefix='testfiles-', dir='.')
+        logging.info(f'Folder: {folder}:')
+        os.chdir(folder)
         xyzfilename = 'test.xyz'
         pbfilename = 'test.pb'
         forcefilename = 'force'
