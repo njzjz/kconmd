@@ -10,7 +10,7 @@ if __name__ == '__main__':
     with open(path.join(this_directory, 'docs', 'README.md'), encoding='utf-8') as f:
         long_description = f.read()
 
-    tests_require=['pytest-sugar', 'pytest-cov'],
+    tests_require = ['pytest-sugar', 'pytest-cov'],
     setup(name='kconmd',
           description='Molecular dynamics (MD) simulations supported by k-Bags Convolutional Neural Network (kcon).',
           keywords="molecular dynamics kcon",
