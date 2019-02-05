@@ -13,7 +13,7 @@ from kconmd.server import kconMD_client, kconMD_server
 
 @pytest.fixture()
 def cleandir():
-    folder = tempfile.TemporaryDirectory(prefix='testfiles', dir='.')
+    folder = tempfile.mkdtemp(prefix='testfiles-', dir='.')
     logging.info(f'Folder: {folder.name}:')
     os.chdir(folder.name)
 
