@@ -2,7 +2,7 @@ import numpy as np
 from ase import Atoms
 
 
-class Feed(object):
+class Feed:
     def __init__(self, transformer, cutoff):
         self.cutoff = cutoff
         self._transformer = transformer

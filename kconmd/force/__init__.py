@@ -11,7 +11,7 @@ from .f_vdw import f_vdw
 from .feed import Feed
 
 
-class ComputeForces(object):
+class ComputeForces:
     def __init__(
             self, pbfilename, cell=None,
             pbc=False, cutoff=6, vdw=False, nproc=None):

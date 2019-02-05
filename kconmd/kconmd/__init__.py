@@ -4,7 +4,7 @@ import numpy as np
 import logging
 
 
-class kconMD(object):
+class kconMD:
     def __init__(self, pbfilename, xyzfilename="comb.xyz",
                  outputfilename="force.dat", cell=None, pbc=False, cutoff=6,
                  unit=1, vdw=False, nproc=None):

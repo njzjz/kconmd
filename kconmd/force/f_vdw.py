@@ -4,7 +4,7 @@ import numpy as np
 from ase.io import read
 
 
-class f_vdw(object):
+class f_vdw:
     def __init__(self, cutoff=6):
         self.cutoff = cutoff
         self.kcal_to_eV = 1./23.06035

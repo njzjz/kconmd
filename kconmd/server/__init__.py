@@ -1,9 +1,10 @@
 import os
 import time
 import logging
+from abc import ABCMeta
 
 
-class kconMD_CS(object):
+class kconMD_CS(metaclass=ABCMeta):
     def __init__(self, server_path="/tmp/kconmd.server",
                  client_path="/tmp/kconmd.client", sleeptime=1):
         self.server_path = server_path
@@ -42,7 +43,7 @@ class kconMD_CS(object):
                 continue
             self._logger.info(f"Receive message: {s}")
             if "Exit" in s:
-                self.self._logger.info("EXIT")
+                self._logger.info("EXIT")
                 break
             self.handleMessage(s)
 
