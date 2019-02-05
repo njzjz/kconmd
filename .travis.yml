@@ -1,0 +1,11 @@
+language: python
+matrix:
+  include:
+    - python: 3.6
+cache: pip
+
+install:
+  - pip install tox-travis
+
+script:
+  - tox

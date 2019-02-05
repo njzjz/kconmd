@@ -16,12 +16,12 @@ from itertools import combinations, product, repeat, chain
 from functools import partial
 from os.path import basename, dirname, join, splitext
 from ase.atoms import Atoms
-from scipy.misc import comb
+from scipy.special import comb
 from sklearn.metrics import pairwise_distances
 from tensorflow.python.training.training import Features, Example
-from kconMD.kcnn.constants import pyykko, GHOST, LJR
-from kconMD.kcnn.utils import get_atoms_from_kbody_term, safe_divide, compute_n_from_cnk
-from kconMD.kcnn.utils import Gauss
+from .constants import pyykko, GHOST, LJR
+from .utils import get_atoms_from_kbody_term, safe_divide, compute_n_from_cnk
+from .utils import Gauss
 
 __author__ = 'Xin Chen'
 __email__ = 'Bismarrck@me.com'

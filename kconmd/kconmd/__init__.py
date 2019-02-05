@@ -1,14 +1,16 @@
-from kconMD.force import ComputeForces
-from kconMD import kconmd_logging
+from ..force import ComputeForces
 import time
 import numpy as np
+import logging
 
 
-class kconMD(object):
-    def __init__(self, pbfilename, xyzfilename="comb.xyz", outputfilename="force.dat", cell=[0, 0, 0], pbc=True, cutoff=6, unit=1, vdw=False, nproc=None):
+class kconMD:
+    def __init__(self, pbfilename, xyzfilename="comb.xyz",
+                 outputfilename="force.dat", cell=None, pbc=False, cutoff=6,
+                 unit=1, vdw=False, nproc=None):
         self.pbfilename = pbfilename
         self.xyzfilename = xyzfilename
-        self.cell = cell
+        self.cell = cell if cell else [0, 0, 0]
         self.pbc = pbc
         self.cutoff = cutoff
         self.outputfilename = outputfilename
@@ -19,8 +21,9 @@ class kconMD(object):
 
     def initcf(self):
         if self.cf == None:
-            self.cf = ComputeForces(self.pbfilename, cell=self.cell, pbc=self.pbc,
-                                    cutoff=self.cutoff, vdw=self.vdw, nproc=self.nproc)
+            self.cf = ComputeForces(
+                self.pbfilename, cell=self.cell, pbc=self.pbc,
+                cutoff=self.cutoff, vdw=self.vdw, nproc=self.nproc)
 
     def printforce(self):
         time1 = time.time()
@@ -29,4 +32,4 @@ class kconMD(object):
         forces *= self.unit
         np.savetxt(self.outputfilename, forces, fmt='%16.9f')
         time2 = time.time()
-        kconmd_logging("Compute Forces: Time cosumed:", time2-time1, "s")
+        logging.info(f"Compute Forces: Time cosumed: {time2-time1:.3f} s")

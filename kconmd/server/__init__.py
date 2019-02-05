@@ -1,19 +1,20 @@
 import os
 import time
-from kconMD import kconmd_logging
+import logging
+from abc import ABCMeta
 
 
-class kconMD_CS(object):
-    def __init__(self, server_path="/tmp/kconmd.server", client_path="/tmp/kconmd.client", sleeptime=1):
+class kconMD_CS(metaclass=ABCMeta):
+    def __init__(self, server_path="/tmp/kconmd.server",
+                 client_path="/tmp/kconmd.client", sleeptime=1):
         self.server_path = server_path
         self.client_path = client_path
         self.sleeptime = sleeptime
         self.rf = None
         self.wf = None
 
-    @property
-    def logging_prefix(self):
-        return self.CStype.upper()+":"
+    def _message(self, message):
+        return f"{self.CStype.upper()}: {message}"
 
     def mkfifos(self):
         for path in (self.server_path, self.client_path):
@@ -29,41 +30,38 @@ class kconMD_CS(object):
         return f
 
     def sendmessage(self, message):
-        if self.wf == None:
+        if self.wf is None:
             self.wf = self.openfifo(self.write_path, readonly=False)
         os.write(self.wf, bytes(message, 'UTF-8'))
-        self.logging("Send message:", message)
+        logging.info(self._message(f"Send message: {message}"))
 
     def response(self):
         while True:
-            if self.rf == None:
+            if self.rf is None:
                 self.rf = self.openfifo(self.read_path, readonly=True)
             s = str(os.read(self.rf, 1024), 'UTF-8')
             if len(s) == 0:
                 time.sleep(self.sleeptime)
                 continue
-            self.logging("Receive message:", s)
+            logging.info(self._message(f"Receive message: {s}"))
             if "Exit" in s:
-                self.logging("EXIT")
+                logging.info(self._message("EXIT"))
                 break
             self.handleMessage(s)
-
-    def logging(self, *message):
-        localtime = time.asctime(time.localtime(time.time()))
-        kconmd_logging(self.logging_prefix, *message)
 
     def handleMessage(self, message):
         pass
 
 
 class kconMD_server(kconMD_CS):
-    def __init__(self, kconMD, server_path="/tmp/kconmd.server", client_path="/tmp/kconmd.client", sleeptime=1):
+    def __init__(self, kconMD, server_path="/tmp/kconmd.server",
+                 client_path="/tmp/kconmd.client", sleeptime=1):
         kconMD_CS.__init__(self, server_path=server_path,
                            client_path=client_path, sleeptime=sleeptime)
         self.mkfifos()
         self.kconMD = kconMD
         self.kconMD.initcf()
-        self.logging("Initialization is complete.")
+        logging.info(self._message("Initialization is complete."))
 
     @property
     def printforce(self):
@@ -83,13 +81,14 @@ class kconMD_server(kconMD_CS):
 
     def handleMessage(self, message):
         if "Printforce" in message:
-            self.logging("Print Force")
+            logging.info(self._message("Print Force"))
             self.printforce()
             self.sendmessage("Exit")
 
 
 class kconMD_client(kconMD_CS):
-    def __init__(self, server_path="/tmp/kconmd.server", client_path="/tmp/kconmd.client", sleeptime=1):
+    def __init__(self, server_path="/tmp/kconmd.server",
+                 client_path="/tmp/kconmd.client", sleeptime=1):
         kconMD_CS.__init__(self, server_path=server_path,
                            client_path=client_path, sleeptime=sleeptime)
 
