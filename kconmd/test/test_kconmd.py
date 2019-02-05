@@ -19,7 +19,7 @@ def cleandir():
 
 @pytest.mark.usefixtures("cleandir")
 class Test_all:
-    @pytest.fixture(scope="class", autouse=True)
+    @pytest.fixture(scope="class")
     def kconmd(self):
         xyzfilename = 'test.xyz'
         pbfilename = 'test.pb'
