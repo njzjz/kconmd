@@ -14,7 +14,7 @@ from kconmd.server import kconMD_client, kconMD_server
 @pytest.fixture()
 def cleandir():
     folder = tempfile.TemporaryDirectory(prefix='testfiles', dir='.')
-    logging.info(f'Folder: {dirname}:')
+    logging.info(f'Folder: {folder}:')
     os.chdir(folder)
 
 
