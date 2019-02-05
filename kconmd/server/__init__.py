@@ -27,14 +27,14 @@ class kconMD_CS(object):
         return f
 
     def sendmessage(self, message):
-        if self.wf == None:
+        if self.wf is None:
             self.wf = self.openfifo(self.write_path, readonly=False)
         os.write(self.wf, bytes(message, 'UTF-8'))
         self._logger.info(f"Send message: {message}")
 
     def response(self):
         while True:
-            if self.rf == None:
+            if self.rf is None:
                 self.rf = self.openfifo(self.read_path, readonly=True)
             s = str(os.read(self.rf, 1024), 'UTF-8')
             if len(s) == 0:

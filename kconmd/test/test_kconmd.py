@@ -1,13 +1,22 @@
-import unittest
 import logging
+import threading
+import unittest
+import os
 
 import pkg_resources
+import pytest
 
 from kconmd import kconMD
+from kconmd.server import kconMD_client, kconMD_server
 
+@pytest.fixture()
+def cleandir():
+    os.chdir('testfiles')
 
+@pytest.mark.usefixtures("cleandir")
 class Test_all(unittest.TestCase):
-    def test_fragment(self):
+    @pytest.fixture(scope="class", autouse=True)
+    def kconmd(self):
         xyzfilename = 'test.xyz'
         pbfilename = 'test.pb'
         forcefilename = 'force'
@@ -15,10 +24,24 @@ class Test_all(unittest.TestCase):
         for filename in (xyzfilename, pbfilename):
             with open(filename, 'wb') as f:
                 f.write(pkg_resources.resource_string(__name__, filename))
-        kconMD(pbfilename, xyzfilename, forcefilename, cell=[
-            31.219299, 31.219299, 31.219299]).printforce()
+        return kconMD(pbfilename, xyzfilename, forcefilename)
 
-        with open(forcefilename) as f:
+    def test_kconmd(self, kconmd):
+        kconmd.printforce()
+        self._printresult(kconmd)
+
+    def test_server(self, kconmd):
+        server = kconMD_server(kconmd)
+        cilent = kconMD_client()
+        t = threading.Thread(target=server.response, name='server')
+        t.start()
+        cilent.printforce()
+        t.join()
+        self._printresult(kconmd)
+
+    @classmethod
+    def _printresult(cls, kconmd):
+        with open(kconmd.outputfilename) as f:
             logging.info("Force:")
             print(f.read())
 

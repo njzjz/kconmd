@@ -1,2 +1,2 @@
-from kconMD.server import kconMD_client
+from kconmd.server import kconMD_client
 kconMD_client().exitserver()
