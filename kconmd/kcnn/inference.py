@@ -11,8 +11,8 @@ from tensorflow.contrib.layers import batch_norm, layer_norm
 from tensorflow.contrib.layers import conv2d, flatten
 from tensorflow.contrib.layers.python.layers import initializers
 from tensorflow.python.ops import init_ops
-from kconMD.kcnn.constants import KcnnGraphKeys, SEED, GHOST
-from kconMD.kcnn.utils import lrelu, get_atoms_from_kbody_term
+from .constants import KcnnGraphKeys, SEED, GHOST
+from .utils import lrelu, get_atoms_from_kbody_term
 
 __author__ = 'Xin Chen'
 __email__ = 'Bismarrck@me.com'

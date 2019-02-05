@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 # Jinzhe Zeng
 # 2018/08/21
+from multiprocessing import Pool, cpu_count
+
 import numpy as np
 from ase.io import read
-from kconMD.kcnn.predictor import KcnnPredictor
-from kconMD.force.feed import Feed
-from multiprocessing import Pool, cpu_count
-from kconMD.force.f_vdw import f_vdw
+
+from ..kcnn.predictor import KcnnPredictor
+from .f_vdw import f_vdw
+from .feed import Feed
 
 
 class ComputeForces(object):
-    def __init__(self, pbfilename, cell=[0, 0, 0], pbc=True, cutoff=6, vdw=False, nproc=None):
+    def __init__(
+            self, pbfilename, cell=[0, 0, 0],
+            pbc=True, cutoff=6, vdw=False, nproc=None):
         self.clf = KcnnPredictor(pbfilename, fixed=True)
         self.cell = cell
         self.pbc = pbc

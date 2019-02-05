@@ -1,6 +1,7 @@
-from ase.io import read
-import numpy as np
 from math import exp
+
+import numpy as np
+from ase.io import read
 
 
 class f_vdw(object):
@@ -37,8 +38,10 @@ class f_vdw(object):
                        "HO": [1.6800, 0.0344, 10.3247],
                        "CO": [1.8523, 0.1131, 9.8442]
                        }
-        self.twbpname = {"C": {"C": "C", "H": "CH", "O": "CO"}, "H": {
-            "C": "CH", "H": "H", "O": "HO"}, "O": {"C": "CO", "H": "HO", "O": "O"}}
+        self.twbpname = {
+            "C": {"C": "C", "H": "CH", "O": "CO"},
+            "H": {"C": "CH", "H": "H", "O": "HO"},
+            "O": {"C": "CO", "H": "HO", "O": "O"}}
 
     def calculate_forces(self, atoms):
         Tap = self.Tap

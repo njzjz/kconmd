@@ -7,10 +7,10 @@ from __future__ import print_function, absolute_import
 
 import tensorflow as tf
 import json
-from kconMD.kcnn import pipeline
-from kconMD.kcnn import kcnn
+from . import pipeline
+from . import kcnn
 from os.path import join, dirname
-from kconMD.kcnn.constants import GHOST, VARIABLE_MOVING_AVERAGE_DECAY
+from .constants import GHOST, VARIABLE_MOVING_AVERAGE_DECAY
 from tensorflow.python.framework import graph_io
 from tensorflow.python.tools import freeze_graph
 
