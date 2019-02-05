@@ -1,6 +1,5 @@
 import logging
 import threading
-import unittest
 import tempfile
 import os
 
@@ -19,7 +18,7 @@ def cleandir():
 
 
 @pytest.mark.usefixtures("cleandir")
-class Test_all(unittest.TestCase):
+class Test_all:
     @pytest.fixture(scope="class", autouse=True)
     def kconmd(self):
         xyzfilename = 'test.xyz'
@@ -49,7 +48,3 @@ class Test_all(unittest.TestCase):
         with open(kconmd.outputfilename) as f:
             logging.info("Force:")
             print(f.read())
-
-
-if __name__ == '__main__':
-    unittest.main()
