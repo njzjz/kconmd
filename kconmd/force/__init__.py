@@ -16,7 +16,7 @@ class ComputeForces(object):
             self, pbfilename, cell=None,
             pbc=False, cutoff=6, vdw=False, nproc=None):
         self.clf = KcnnPredictor(pbfilename, fixed=True)
-        self.cell = cell id cell else [0, 0, 0]
+        self.cell = cell if cell else [0, 0, 0]
         self.pbc = pbc
         self.cutoff = cutoff
         self.maxatoms = self.clf.transformer.max_occurs
