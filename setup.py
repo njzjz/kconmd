@@ -25,7 +25,7 @@ if __name__ == '__main__':
           extras_require={
               "tf": ["tensorflow>=1.3"],
               "tf_gpu": ["tensorflow-gpu>=1.3"],
-          }
+          },
           test_suite='kconmd.test',
           tests_require=['pytest-sugar'],
           use_scm_version=True,
