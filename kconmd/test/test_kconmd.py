@@ -10,7 +10,7 @@ from kconmd import kconMD
 from kconmd.server import kconMD_client, kconMD_server
 
 
-@pytest.fixture()
+@pytest.fixture(scope="class")
 def cleandir():
     folder = tempfile.mkdtemp(prefix='testfiles-', dir='.')
     logging.info(f'Folder: {folder}:')
