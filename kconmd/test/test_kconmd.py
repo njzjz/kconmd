@@ -1,6 +1,7 @@
 import logging
 import threading
 import unittest
+import tempfile
 import os
 
 import pkg_resources
@@ -9,9 +10,13 @@ import pytest
 from kconmd import kconMD
 from kconmd.server import kconMD_client, kconMD_server
 
+
 @pytest.fixture()
 def cleandir():
-    os.chdir('testfiles')
+    folder = tempfile.TemporaryDirectory(prefix='testfiles', dir='.')
+    logging.info(f'Folder: {dirname}:')
+    os.chdir(folder)
+
 
 @pytest.mark.usefixtures("cleandir")
 class Test_all(unittest.TestCase):
