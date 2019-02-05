@@ -14,8 +14,8 @@ from kconmd.server import kconMD_client, kconMD_server
 @pytest.fixture()
 def cleandir():
     folder = tempfile.mkdtemp(prefix='testfiles-', dir='.')
-    logging.info(f'Folder: {folder.name}:')
-    os.chdir(folder.name)
+    logging.info(f'Folder: {folder}:')
+    os.chdir(folder)
 
 
 @pytest.mark.usefixtures("cleandir")
