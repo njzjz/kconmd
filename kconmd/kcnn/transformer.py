@@ -16,7 +16,7 @@ from itertools import combinations, product, repeat, chain
 from functools import partial
 from os.path import basename, dirname, join, splitext
 from ase.atoms import Atoms
-from scipy.misc import comb
+from scipy.special import comb
 from sklearn.metrics import pairwise_distances
 from tensorflow.python.training.training import Features, Example
 from .constants import pyykko, GHOST, LJR
