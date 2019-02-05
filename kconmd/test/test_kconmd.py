@@ -35,8 +35,9 @@ class Test_all:
         t = threading.Thread(target=server.response, name='server')
         t.start()
         cilent.printforce()
-        t.join()
+        cilent.exitserver()
         self._printresult(kconmd)
+        t.join()
 
     @classmethod
     def _printresult(cls, kconmd):
