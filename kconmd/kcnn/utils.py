@@ -10,7 +10,7 @@ import numpy as np
 import logging
 import json
 import time
-from scipy.misc import factorial, comb
+from scipy.special import factorial, comb
 from logging.config import dictConfig
 from tensorflow.python.framework import ops
 from tensorflow.python.ops import math_ops
