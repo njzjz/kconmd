@@ -16,7 +16,7 @@ if __name__ == '__main__':
           keywords="molecular dynamics kcon",
           url='https://github.com/njzjz/kconmd',
           author='Jinzhe Zeng',
-          author_email='jzzeng@stu.ecnu.edu.cn',
+          author_email='jinzhe.zeng@ustc.edu.cn',
           packages=find_packages(),
           python_requires='>=3.6.0',
           install_requires=['numpy', 'scipy',
