@@ -10,7 +10,7 @@ Molecular Dynamics (MD) simulations supported by [k-Bags Convolutional Neural Ne
 
 **Author**: Jinzhe Zeng
 
-Email: jzzeng@stu.ecnu.edu.cn
+Email: jinzhe.zeng@ustc.edu.cn
 
 [![Research Group](https://img.shields.io/website-up-down-green-red/http/computchem.cn.svg?label=Research%20Group)](http://computechem.cn)
 
